@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Étude de cas Indy | Aminata Dia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #111111;
+    --beige: #F5F1EA;
+    --pink: #F6C4CF;
+    --white: #FFFFFF;
+    --muted: #6B6259;
+    --line: #E6DDD2;
+    --green: #E5F2E8;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--beige);
+    color: var(--black);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 1.5rem; }
+  header.wrap { padding-top: clamp(2.5rem, 7vw, 4.5rem); padding-bottom: 2rem; }
+  header::after { content:""; display:block; width:4.5rem; height:4px; background:var(--pink); margin-top:2rem; }
+  .eyebrow {
+    margin: 0 0 .75rem;
+    font-size: .82rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+  .intro {
+    margin: 1.25rem 0 0;
+    color: var(--muted);
+    max-width: 68ch;
+    font-size: 1.06rem;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(246,240,232,.94);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(230,221,210,.75);
+  }
+  [role="tablist"] {
+    display: inline-flex;
+    gap: .25rem;
+    padding: .3rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  [role="tab"] {
+    font: inherit;
+    font-weight: 700;
+    font-size: .92rem;
+    cursor: pointer;
+    border: 0;
+    border-radius: 6px;
+    padding: .62rem 1.1rem;
+    white-space: nowrap;
+    background: transparent;
+    color: var(--muted);
+  }
+  [role="tab"][aria-selected="true"] { background: var(--pink); color: var(--black); }
+  [role="tab"]:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+  main { padding: 1.5rem 0 5rem; }
+  [role="tabpanel"][hidden] { display: none; }
+  .panel {
+    background: var(--white);
+    border: 1px solid rgba(230,221,210,.82);
+    border-radius: var(--radius);
+    padding: clamp(1.25rem, 4vw, 3rem);
+  }
+  h2 {
+    font-size: clamp(1.85rem, 4vw, 2.45rem);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 .25rem;
+    line-height: 1.12;
+  }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 0 0 .55rem; }
+  p { max-width: 72ch; margin: 0 0 1rem; }
+  .lead { color: var(--muted); margin-bottom: 2.25rem; max-width: 74ch; }
+  .block { position:relative; padding: 2.25rem 0; border-top: 1px solid var(--line); }
+  .block:first-of-type { border-top: 0; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; margin-top: 1rem; }
+  .card { border:1px solid var(--line); border-radius:7px; padding:1.15rem 1.2rem; background:#FFFEFC; }
+  .card strong { display: block; margin-bottom: .35rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .callout { border-radius: 6px; padding: 1.1rem 1.2rem; margin: 1rem 0 0; background: var(--beige); border: 1px solid var(--line); }
+  .callout.key { background: var(--pink); border-color: transparent; }
+  .callout.safe { background: var(--green); border-color: transparent; }
+  .callout p:last-child { margin-bottom: 0; }
+  ul, ol { margin: .7rem 0 0; padding-left: 1.3rem; }
+  li { margin: .45rem 0; }
+  .kicker { display: inline-block; font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: .45rem; }
+  .metric { display: grid; grid-template-columns: 180px 1fr; gap: 1rem; padding: .8rem 0; border-top: 1px solid var(--line); }
+  .metric:first-child { border-top: 0; }
+  .metric b { font-size: .95rem; }
+  .metric span { color: var(--muted); }
+  .screen { display: grid; grid-template-columns: 250px 1fr; gap: 2.7rem; align-items: start; padding: 2.6rem 0; border-top: 1px solid var(--line); }
+  .screen:first-of-type { border-top: 0; }
+  .phone { position: relative; aspect-ratio: 9 / 19.5; border: 7px solid var(--black); border-radius: 34px; background: var(--beige); overflow: hidden; }
+  .phone .placeholder { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 1rem; color: var(--muted); font-size: .9rem; }
+  .pin { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--pink); color: var(--black); border: 2px solid var(--black); display: grid; place-items: center; font-size: .8rem; font-weight: 800; }
+  .notes ol { list-style: none; padding: 0; margin: 1rem 0 0; counter-reset: n; }
+  .notes li { counter-increment: n; position: relative; padding: 0 0 1rem 2.4rem; max-width: 62ch; }
+  .notes li::before { content: counter(n); position: absolute; left: 0; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--pink); border: 2px solid var(--black); display: grid; place-items: center; font-size: .8rem; font-weight: 800; }
+  .step { color: var(--muted); font-size: .88rem; font-weight: 800; margin: 0 0 .25rem; }
+  .hypothesis { margin-top: .9rem; padding: .8rem .95rem; border-left: 4px solid var(--black); background: var(--beige); border-radius: 0 4px 4px 0; font-size: .94rem; }
+  .todo { color: var(--muted); font-style: italic; }
+  a { color: var(--black); text-underline-offset: 3px; }
+  .hyp-list { list-style: none; padding: 0; margin: .4rem 0 0; }
+  .hyp-list li { margin: 0 0 .7rem; color: var(--muted); font-size: .95rem; }
+  .hyp-list b { color: var(--black); margin-right: .35rem; }
+  .ex { color: var(--muted); font-style: italic; }
+  .takeaway {
+    margin:.25rem 0 1.35rem; padding:.8rem 1rem;
+    border-left:4px solid var(--pink); background:#FCF8F4; font-weight:700; max-width:72ch;
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap; }
+  .btn-video {
+    display: inline-flex; align-items: center; gap: .5rem; flex-shrink: 0;
+    background: var(--black); color: var(--white); text-decoration: none;
+    font-weight: 600; font-size: .95rem; padding: .75rem 1.1rem; border-radius: 6px;
+  }
+  .btn-video:hover, .btn-video:focus-visible { background: #333; outline: none; }
+  .btn-video span { color: var(--pink); }
+
+  /* Boutons vidéo */
+  .header-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .btn-video { font-size: .9rem; padding: .65rem 1rem; white-space: nowrap; }
+  .btn-secondary { background: var(--white); color: var(--black); border: 1px solid var(--line); }
+  .btn-secondary:hover, .btn-secondary:focus-visible { background: var(--pink); color: var(--black); }
+  .meta { margin: .85rem 0 0; color: var(--muted); font-size: .9rem; font-weight: 600; }
+  .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; margin-bottom: 1rem; }
+  .panel-head .lead { margin-bottom: 0; }
+
+  /* Cadrage : navigation par étapes */
+  .cadrage-layout { display: block; }
+  .section-nav {
+    display: flex; gap: .35rem; margin: 0 0 1.5rem; padding: .35rem;
+    border: 1px solid var(--line); border-radius: 6px; background: var(--beige);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .section-tab {
+    appearance: none; display: flex; align-items: center; gap: .55rem; flex-shrink: 0;
+    border: 0; background: transparent; color: var(--muted);
+    font: inherit; font-size: .88rem; font-weight: 600; text-align: left;
+    padding: .5rem .75rem; border-radius: 4px; cursor: pointer; white-space: nowrap;
+  }
+  .section-tab .num {
+    display: grid; place-items: center; width: 1.45rem; height: 1.45rem; flex-shrink: 0;
+    border-radius: 50%; border: 1px solid var(--line); background: var(--white);
+    font-size: .75rem; font-weight: 700; color: var(--black);
+  }
+  .section-tab:hover { color: var(--black); background: var(--white); }
+  .section-tab:focus-visible { outline: 2px solid var(--black); outline-offset: 1px; }
+  .section-tab[aria-selected="true"] { background: var(--pink); color: var(--black); }
+  .section-tab[aria-selected="true"] .num { background: var(--black); border-color: var(--black); color: var(--white); }
+  .section-tab.is-done .num { background: var(--black); border-color: var(--black); color: var(--pink); }
+
+  .cadrage-section { border-top: 0; padding: 0; }
+  .cadrage-section[hidden] { display: none !important; }
+  @media (prefers-reduced-motion: no-preference) {
+    .cadrage-section { animation: sectionFade .18s ease-out; }
+    @keyframes sectionFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  }
+
+
+  /* Ordinateur : colonne verticale à gauche */
+  @media (min-width: 900px) {
+    .cadrage-layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+    .section-nav {
+      flex-direction: column; margin: 0; padding: 0; border: 0; background: transparent;
+      position: sticky; top: 92px; overflow: visible;
+    }
+    .section-tab { width: 100%; padding: .65rem .75rem; }
+    .section-nav::before {
+      content: "Étapes du cadrage"; display: block; margin: 0 0 .5rem .75rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 760px) {
+    .panel-head { flex-direction: column; }
+    .header-top { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .header-actions { width: 100%; }
+    .header-actions .btn-video { flex: 1; justify-content: center; padding: .65rem .6rem; font-size: .85rem; }
+  }
+
+  footer { padding: 2rem 0 3rem; color: var(--muted); font-size: .9rem; }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+    .metric { grid-template-columns: 1fr; gap: .2rem; }
+    .screen { grid-template-columns: 1fr; gap: 1.5rem; }
+    .phone { max-width: 240px; }
+  }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="header-top">
+    <div>
+      <p class="eyebrow">Étude de cas · Product Manager</p>
+      <h1>Étude de cas Indy</h1>
+    </div>
+    <div class="header-actions" aria-label="Présentations vidéo">
+      <a class="btn-video" href="#" target="_blank" rel="noopener" data-loom="mockups"><span>▶</span> Loom MVP</a>
+      <a class="btn-video" href="#" target="_blank" rel="noopener" data-loom="simulateur"><span>▶</span> Loom Simulateur</a>
+    </div>
+  </div>
+  <p class="intro todo">[Phrase d'intro à écrire]</p>
+  <p class="meta">Temps cible : 4h · Focus : décisions, priorisation, clarté</p>
+</header>
+<nav>
+  <div class="wrap">
+    <div role="tablist" aria-label="Sections de l'étude de cas">
+      <button role="tab" id="tab-cadrage" aria-controls="panel-cadrage" aria-selected="true">Cadrage produit</button>
+      <button role="tab" id="tab-mvp" aria-controls="panel-mvp" aria-selected="false" tabindex="-1">Mock-ups MVP</button>
+      <button role="tab" id="tab-simu" aria-controls="panel-simu" aria-selected="false" tabindex="-1">Simulateur crédit d'impôt</button>
+    </div>
+  </div>
+</nav>
+<main class="wrap">
+  <section role="tabpanel" id="panel-cadrage" aria-labelledby="tab-cadrage" class="panel">
+    <h2>Cadrage et réflexion produit</h2>
+    <p class="lead todo">[Résumé du brief]</p>
+    <p style="max-width:72ch;margin:-1rem 0 1.6rem;color:var(--muted);font-size:.93rem;">Le support documente uniquement les choix nécessaires au MVP : problème, hypothèses, périmètre, mesure et suite.</p>
+    
+    <div class="cadrage-layout">
+      <div class="section-nav" role="tablist" aria-label="Étapes du cadrage" aria-orientation="vertical">
+        <button class="section-tab" type="button" role="tab" id="stab-1" aria-controls="sec-1" aria-selected="true"><span class="num">1</span>Contexte</button>
+        <button class="section-tab" type="button" role="tab" id="stab-2" aria-controls="sec-2" aria-selected="false" tabindex="-1"><span class="num">2</span>Cible</button>
+        <button class="section-tab" type="button" role="tab" id="stab-3" aria-controls="sec-3" aria-selected="false" tabindex="-1"><span class="num">3</span>Hypothèses</button>
+        <button class="section-tab" type="button" role="tab" id="stab-4" aria-controls="sec-4" aria-selected="false" tabindex="-1"><span class="num">4</span>Périmètre</button>
+        <button class="section-tab" type="button" role="tab" id="stab-5" aria-controls="sec-5" aria-selected="false" tabindex="-1"><span class="num">5</span>Mesure</button>
+        <button class="section-tab" type="button" role="tab" id="stab-6" aria-controls="sec-6" aria-selected="false" tabindex="-1"><span class="num">6</span>Suite</button>
+      </div>
+      <div class="cadrage-content">
+
+
+    <div class="block cadrage-section" id="sec-1" role="tabpanel" aria-labelledby="stab-1">
+      <span class="kicker">1 · Contexte</span>
+      <h3>Contexte et enjeu</h3>
+      <p class="takeaway"><span class="ex">[À retenir. Ex : Bankin' connaît déjà une partie de la situation financière : c'est son avantage pour estimer vite et bien.]</span></p>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"><div class="card"><strong>Problème utilisateur</strong><p class="todo">[À remplir]</p></div><div class="card"><strong>Enjeu business</strong><p class="todo">[À remplir]</p></div><div class="card"><strong>Avantage Bankin’</strong><p class="todo">[À remplir]</p></div></div>
+      <div class="callout "><strong>Lead qualifié (définition)</strong><p class="todo">[À remplir]</p></div>
+    </div>
+
+    <div class="block cadrage-section" id="sec-2" role="tabpanel" aria-labelledby="stab-2" hidden>
+      <span class="kicker">2 · Cible</span>
+      <h3>Cible et problèmes priorisés</h3>
+      <p class="takeaway"><span class="ex">[À retenir. Ex : Le vrai frein n'est pas le calcul, c'est de savoir ce que le couple peut vraiment se permettre.]</span></p>
+      <p><strong>Segment :</strong> <span class="ex">[Ex : jeune couple locataire, sans enfant, primo-accédant]</span></p>
+      <div class="callout"><strong>JTBD</strong><p class="ex">[Ex : « Quand nous envisageons d'acheter, nous voulons savoir ce que nous pouvons nous permettre pour décider si le projet est réaliste. »]</p></div>
+      <ol style="margin-top:1.25rem">
+        <li><strong class="ex">[Problème 1 en une phrase. Ex : Je ne sais pas combien nous pouvons acheter.]</strong> <span class="ex">[Explication courte. Ex : mensualité, apport et frais sont difficiles à combiner.]</span></li>
+        <li><strong class="ex">[Problème 2 en une phrase. Ex : Mon partenaire n'est pas sur l'app.]</strong> <span class="ex">[Explication courte. Ex : notre estimation reste partielle sans ses revenus et son épargne.]</span></li>
+        <li><strong class="ex">[Problème 3 en une phrase. Ex : Je ne sais pas quelle est la prochaine étape.]</strong> <span class="ex">[Explication courte. Ex : le passage de l'estimation au financement est peu lisible.]</span></li>
+      </ol>
+      <div class="callout safe">
+        <strong>Critère de priorisation</strong>
+        <p class="ex">[Ex : fréquence, douleur, effet bloquant sur la suite du parcours, capacité de Bankin' à y répondre]</p>
+        <strong>→ Priorité MVP</strong>
+        <p class="ex">[Ex : répondre d'abord à « quel bien pouvons-nous nous permettre ? » avant toute mise en relation]</p>
+      </div>
+    </div>
+
+    <div class="block cadrage-section" id="sec-3" role="tabpanel" aria-labelledby="stab-3" hidden>
+      <span class="kicker">3 · Hypothèses</span>
+      <h3>Ce qu'on sait, ce qu'on suppose</h3>
+      <p class="takeaway"><span class="ex">[À retenir. Ex : Le MVP teste surtout une chose : une estimation claire crée-t-elle assez de valeur pour aller plus loin ?]</span></p>
+      <div class="grid">
+        <div class="card">
+          <strong>Ce que le brief nous apprend</strong>
+          <p class="ex">[Ex : cible jeune couple locataire sans enfant, projet de premier achat, monétisation par apport d'affaires auprès de banques et courtiers]</p>
+        </div>
+        <div class="card">
+          <strong>Ce que je suppose</strong>
+          <ul class="hyp-list">
+            <li><b>H1</b><span class="ex">[Ex : les données déjà synchronisées suffisent à préremplir la part de l'utilisateur]</span></li>
+            <li><b>H2</b><span class="ex">[Ex : le partenaire peut compléter sa part rapidement sans faire chuter la complétion]</span></li>
+            <li><b>H3</b><span class="ex">[Ex : une estimation claire crée assez de valeur pour accepter une mise en relation]</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block cadrage-section" id="sec-4" role="tabpanel" aria-labelledby="stab-4" hidden>
+      <span class="kicker">4 · Périmètre</span>
+      <h3>Périmètre MVP</h3>
+      <p class="takeaway"><span class="ex">[À retenir. Ex : Un parcours court qui répond à une seule question avant toute mise en relation.]</span></p>
+      <div class="callout key"><strong>Promesse</strong><p class="todo">[À remplir]</p></div>
+      <div class="grid"><div class="card"><strong>Dans le MVP</strong><p class="todo">[À remplir]</p></div><div class="card"><strong>Hors MVP</strong><p class="todo">[À remplir]</p></div></div>
+      <div class="callout "><strong>Parcours</strong><p class="todo">[À remplir]</p></div>
+    </div>
+
+    <div class="block cadrage-section" id="sec-5" role="tabpanel" aria-labelledby="stab-5" hidden>
+      <span class="kicker">5 · Mesure</span>
+      <h3>Mesure et risques</h3>
+      <p class="takeaway"><span class="ex">[À retenir. Ex : On mesure la valeur utilisateur d'abord, le lead ensuite, sans dégrader la confiance.]</span></p>
+      <div class="metric"><b>Métrique principale</b><span class="todo">[À remplir]</span></div>
+      <div class="metric"><b>Exploitable =</b><span class="todo">[À remplir]</span></div>
+      <div class="metric"><b>Compréhensible =</b><span class="todo">[À remplir]</span></div>
+      <div class="metric"><b>Secondaires et guardrails</b><span class="todo">[À remplir]</span></div>
+      <ul><li class="todo">[Risque 1]</li><li class="todo">[Risque 2]</li></ul>
+    </div>
+
+    <div class="block cadrage-section" id="sec-6" role="tabpanel" aria-labelledby="stab-6" hidden>
+      <span class="kicker">6 · Suite</span>
+      <h3>Next steps et usage de l’IA</h3>
+      <p class="takeaway"><span class="ex">[À retenir. Ex : Tester la confiance dans l'estimation, puis le bon moment pour proposer un partenaire.]</span></p>
+      <div class="grid"><div class="card"><strong>Next steps</strong><p class="todo">[À remplir]</p></div><div class="card"><strong>Usage de l’IA</strong><p class="todo">[À remplir]</p></div></div>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <section role="tabpanel" id="panel-mvp" aria-labelledby="tab-mvp" class="panel" hidden>
+    <div class="panel-head">
+      <div>
+        <h2>Mock-ups MVP</h2>
+        <p class="lead todo">[Résumé du parcours]</p>
+      </div>
+      <a class="btn-video btn-secondary" href="#" target="_blank" rel="noopener" data-loom="mockups">
+        <span>▶</span> Loom · Mock-ups
+      </a>
+    </div>
+
+    <article class="screen">
+      <div class="phone"><span class="placeholder">[Maquette écran 1]</span><span class="pin" style="top:18%; left:12%">1</span><span class="pin" style="top:72%; left:64%">2</span></div>
+      <div class="notes">
+        <p class="step">Écran 1</p><h3 class="todo">[Titre de l'écran]</h3>
+        <ol><li class="todo">[Commentaire produit]</li><li class="todo">[Commentaire produit]</li></ol>
+        <div class="hypothesis"><strong>Hypothèse testée :</strong> <span class="ex">[Ex : H3]</span></div>
+      </div>
+    </article>
+
+    <article class="screen">
+      <div class="phone"><span class="placeholder">[Maquette écran 2]</span><span class="pin" style="top:22%; left:14%">1</span><span class="pin" style="top:58%; left:66%">2</span></div>
+      <div class="notes">
+        <p class="step">Écran 2</p><h3 class="todo">[Titre de l'écran]</h3>
+        <ol><li class="todo">[Commentaire produit]</li><li class="todo">[Commentaire produit]</li></ol>
+        <div class="hypothesis"><strong>Hypothèse testée :</strong> <span class="ex">[Ex : H1 / H2]</span></div>
+      </div>
+    </article>
+
+    <article class="screen">
+      <div class="phone"><span class="placeholder">[Maquette écran 3]</span><span class="pin" style="top:20%; left:12%">1</span><span class="pin" style="top:48%; left:68%">2</span><span class="pin" style="top:74%; left:18%">3</span></div>
+      <div class="notes">
+        <p class="step">Écran 3</p><h3 class="todo">[Titre de l'écran]</h3>
+        <ol><li class="todo">[Commentaire produit]</li><li class="todo">[Commentaire produit]</li><li class="todo">[Commentaire produit]</li></ol>
+        <div class="hypothesis"><strong>Hypothèse testée :</strong> <span class="ex">[Ex : H3]</span></div>
+      </div>
+    </article>
+
+    <article class="screen">
+      <div class="phone"><span class="placeholder">[Maquette écran 4]</span><span class="pin" style="top:30%; left:16%">1</span><span class="pin" style="top:72%; left:62%">2</span></div>
+      <div class="notes">
+        <p class="step">Écran 4</p><h3 class="todo">[Titre de l'écran]</h3>
+        <ol><li class="todo">[Commentaire produit]</li><li class="todo">[Commentaire produit]</li></ol>
+        <div class="hypothesis"><strong>Hypothèse testée :</strong> <span class="ex">[Ex : H3]</span></div>
+      </div>
+    </article>
+  </section>
+
+  <section role="tabpanel" id="panel-simu" aria-labelledby="tab-simu" class="panel" hidden>
+    <div class="panel-head">
+      <div>
+        <h2>Simulateur crédit d'impôt</h2>
+        <p class="lead">Garde d'enfants à domicile, calcul à partir des informations saisies par l'utilisateur.</p>
+      </div>
+      <a class="btn-video btn-secondary" href="#" target="_blank" rel="noopener" data-loom="simulateur">
+        <span>▶</span> Loom · Simulateur
+      </a>
+    </div>
+    <div class="block"><h3>Lien vers le Google Sheet</h3><p class="todo">[Lien à ajouter]</p></div>
+    <div class="block"><h3>Règles de calcul (source Service-Public.fr)</h3><p class="todo">[À remplir]</p></div>
+    <div class="block"><h3>Logique du tableau</h3><p class="todo">[À remplir]</p></div>
+    <div class="block"><h3>Cas de test</h3><p class="todo">[À remplir]</p></div>
+    <div class="block"><h3>Capture du simulateur</h3><p class="todo">[Image à ajouter]</p></div>
+  </section>
+</main>
+<footer class="wrap">Aminata Dia · Étude de cas Product Manager</footer>
+<script>
+  const tabs = [...document.querySelectorAll('nav [role="tab"]')];
+  function select(tab, focus = true) {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+    history.replaceState(null, '', '#' + tab.id.replace('tab-', ''));
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') select(tabs[(i + 1) % tabs.length]);
+      if (e.key === 'ArrowLeft') select(tabs[(i - 1 + tabs.length) % tabs.length]);
+    });
+  });
+
+  const sectionTabs = [...document.querySelectorAll('.section-tab')];
+  let current = 0;
+  function selectSection(index, focus = false) {
+    current = index;
+    sectionTabs.forEach((t, i) => {
+      const on = i === index;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      t.classList.toggle('is-done', i < index);
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    const nav = document.querySelector('.section-nav');
+    if (nav.scrollWidth > nav.clientWidth) {
+      const t = sectionTabs[index];
+      nav.scrollTo({ left: t.offsetLeft - (nav.clientWidth - t.offsetWidth) / 2, behavior: 'smooth' });
+    }
+    if (focus) sectionTabs[index].focus();
+  }
+  sectionTabs.forEach((t, i) => {
+    t.addEventListener('click', () => selectSection(i));
+    t.addEventListener('keydown', e => {
+      const n = sectionTabs.length;
+      if (['ArrowDown', 'ArrowRight'].includes(e.key)) { e.preventDefault(); selectSection((i + 1) % n, true); }
+      if (['ArrowUp', 'ArrowLeft'].includes(e.key)) { e.preventDefault(); selectSection((i - 1 + n) % n, true); }
+    });
+  });
+  selectSection(0);
+
+  // Colle ici tes URLs Loom finales :
+  const loomLinks = {
+    mockups: '#',     // Loom MVP
+    simulateur: '#'
+  };
+  document.querySelectorAll('[data-loom]').forEach(link => {
+    const url = loomLinks[link.dataset.loom];
+    if (url && url !== '#') link.href = url;
+  });
+
+  const start = document.getElementById('tab-' + location.hash.slice(1));
+  if (start) select(start, false);
+</script>
+</body>
+</html>
