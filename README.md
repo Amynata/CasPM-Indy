@@ -1,4 +1,4 @@
-# Étude de cas produit — Indy
+# Étude de cas produit Indy
 
 Ce dépôt présente une étude de cas produit réalisée pour Indy. Le projet propose une réflexion autour de l'accompagnement des futurs acquéreurs et de la conception d'un simulateur de financement simple, contextualisé et actionnable.
 
@@ -8,8 +8,6 @@ Ce dépôt présente une étude de cas produit réalisée pour Indy. Le projet p
 - **Analyse de marché** : comparaison de parcours de simulation existants et identification des opportunités de différenciation.
 - **Proposition MVP** : principes d'expérience, parcours utilisateur et mock-ups.
 - **Simulateur** : méthode de calcul et accès à la version interactive.
-
-![Aperçu de la méthode du simulateur](assets/methode-simulateur.png)
 
 ## Consulter l'étude de cas
 
@@ -38,4 +36,4 @@ Puis rendez-vous sur [http://localhost:8000](http://localhost:8000).
 
 ## Autrice
 
-**Aminata Dia** — Product Manager / Data
+**Aminata Dia**, Product Manager / Data
