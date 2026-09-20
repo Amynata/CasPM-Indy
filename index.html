@@ -232,6 +232,10 @@
   .tools li{font-size:.82rem;color:#D8D6FF;background:rgba(255,255,255,.12);border-radius:999px;padding:.35rem .8rem;margin:0}
   .tools b{color:#fff;font-weight:700;margin-right:.3rem}
   .question{font-family:'Outfit',sans-serif;font-size:clamp(1.05rem,1.5vw,1.25rem);font-weight:500;line-height:1.4;margin:0;max-width:74ch}
+  .pb.partial{background:var(--bg);border-color:var(--line)}
+  .pb.partial .mark{color:var(--accent)}
+  .limit{margin:1rem 0 0;font-size:.85rem;color:var(--muted);max-width:none}
+  .limit b{font-family:'Outfit',sans-serif;color:var(--ink);font-weight:600}
   footer{padding:2rem 0 3rem;color:var(--muted);font-size:.88rem}
 
   @media(min-width:900px){
@@ -378,15 +382,18 @@
             <figcaption class="dg-title">Trois problèmes possibles, un seul retenu pour le MVP</figcaption>
             <div class="problems">
               <div class="pb kept"><span class="tag">H1 · Financier</span><p><b>Savoir si le projet est financièrement réaliste</b>Traduire revenus, charges et apport en capacité d'achat.</p><span class="mark">Retenu</span></div>
-              <div class="pb"><span class="tag">H2 · Parcours</span><p><b>Savoir par où commencer</b>Identifier les bons interlocuteurs.</p><span class="mark">Plus tard</span></div>
+              <div class="pb partial"><span class="tag">H2 · Parcours</span><p><b>Savoir par où commencer</b>Identifier les bons interlocuteurs.</p><span class="mark">Partiel</span></div>
               <div class="pb"><span class="tag">H3 · Démarches</span><p><b>Savoir quoi préparer</b>Visibilité sur les démarches et les documents.</p><span class="mark">Plus tard</span></div>
             </div>
             <div class="criteria">
               <p class="crit"><b><span class="cnum">1</span>Signaux externes</b>Les conditions de financement pèsent sur le passage à l'achat des primo-accédants.</p>
               <p class="crit"><b><span class="cnum">2</span>Potentiel de différenciation, critère principal</b>Bankin' dispose déjà des données financières nécessaires.</p>
             </div>
+            <p class="limit"><b>Limite :</b> cette priorisation repose sur des signaux externes et sur l'avantage spécifique de Bankin'. Elle reste une hypothèse à valider auprès d'utilisateurs avant d'investir davantage.</p>
+          
           </figure>
           <p>Je priorise donc le problème de <strong>l'incertitude sur la capacité d'achat</strong>, car il est important pour la cible et correspond à un domaine dans lequel Bankin' dispose d'un avantage différenciant : la disponibilité des données financières.</p>
+          <p>Le MVP amorce partiellement le problème 2 via la mise en relation, sans traiter la lisibilité du parcours complet.</p>
           <div class="callout safe">
             <p><strong>Hypothèse à tester :</strong> je souhaite tester si la visibilité sur la capacité financière de l'utilisateur lui permet de savoir en 5 minutes si son projet est réaliste.</p>
           </div>
