@@ -243,6 +243,10 @@
   .schema.wide{margin:0;max-width:820px}
   footer a{color:var(--muted);font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
   footer a:hover,footer a:focus-visible{color:var(--accent);border-color:var(--accent);outline:none}
+  .nav-hint{display:flex;flex-wrap:wrap;gap:.35rem 1.4rem}
+  .nav-hint b{color:#fff;font-weight:700;margin-right:.35rem}
+  .nav-hint a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45)}
+  .nav-hint a:hover,.nav-hint a:focus-visible{border-bottom-color:#fff;outline:none}
   footer{padding:2rem 0 3rem;color:var(--muted);font-size:.88rem}
 
   @media(min-width:900px){
@@ -298,7 +302,7 @@
       <li><b>Claude</b> développement et prototypes</li>
       <li><b>Excalidraw</b> schémas de raisonnement</li>
     </ul>
-    <p class="meta">Temps cible : 4h · Focus : décisions, priorisation, clarté</p>
+    <p class="meta nav-hint"><span><b>Exercice 1 · Bankin'</b> <a href="#cadrage" data-goto="tab-cadrage">Cadrage produit</a> et <a href="#mvp" data-goto="tab-mvp">Mock-ups MVP</a></span><span><b>Exercice 2</b> <a href="#simu" data-goto="tab-simu">Simulateur crédit d'impôt</a></span></p>
   </div>
 </header>
 
@@ -787,6 +791,20 @@
       if (e.key === 'ArrowLeft') selectTab(tabs[(i - 1 + tabs.length) % tabs.length]);
     });
   });
+
+
+  // Liens de l'en-tête vers les onglets
+  document.querySelectorAll('[data-goto]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const tab = document.getElementById(a.dataset.goto);
+      selectTab(tab, false);
+      document.querySelector('nav').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+  // Ouvrir le bon onglet si l'adresse contient #cadrage, #mvp ou #simu
+  const fromHash = document.getElementById('tab-' + location.hash.slice(1));
+  if (fromHash && fromHash.closest('nav')) selectTab(fromHash, false);
 
   // Étapes du cadrage
   document.querySelectorAll('.section-nav').forEach(nav => {
