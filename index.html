@@ -241,6 +241,8 @@
   .metric .kpi{font-size:.95rem;letter-spacing:.02em}
   .decisions.plain li b{display:inline}
   .schema.wide{margin:0;max-width:820px}
+  footer a{color:var(--muted);font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
+  footer a:hover,footer a:focus-visible{color:var(--accent);border-color:var(--accent);outline:none}
   footer{padding:2rem 0 3rem;color:var(--muted);font-size:.88rem}
 
   @media(min-width:900px){
@@ -283,7 +285,7 @@
         <h1>Étude de cas Indy</h1>
       </div>
       <div class="header-actions">
-        <a class="btn-video" href="#" target="_blank" rel="noopener" data-loom="mvp"><span>▶</span> Présentation Loom</a>
+        <a class="btn-video" href="https://www.loom.com/share/8e86520f6ee3488f9c35d9914d0a6f34" target="_blank" rel="noopener" data-loom="mvp"><span>▶</span> Présentation Loom</a>
         <a class="btn-video btn-ghost" href="https://app.notion.com/p/Cas-Pratiques-Indy-3dd574051e7580e6ab5ec5c678d19799" target="_blank" rel="noopener">Voir sur Notion ↗</a>
       </div>
     </div>
@@ -435,19 +437,19 @@
 <div class="block cadrage-section" id="sec-4" role="tabpanel" aria-labelledby="stab-4" hidden>
           <span class="kicker">4 · Mesure</span>
           <h3>Mesure</h3>
-          <p class="takeaway">La mise en relation aboutie est la North Star, mais elle ne tient que si l'utilisateur a compris son résultat.</p>
+          <p class="takeaway">Le MVP réussit si l'utilisateur comprend son résultat. Le business suit : un utilisateur qui clique sans avoir compris produit un lead qui ne convertit pas.</p>
           <ul>
-            <li><strong>North Star business :</strong> nombre de mises en relation abouties côté partenaire, en lien direct avec l'objectif d'accélérer la monétisation.
+            <li><strong>Succès utilisateur :</strong> « Je sais maintenant si mon projet me paraît réaliste. »
               <ul>
-                <li>Indicateur intermédiaire : taux de clic sur le CTA partenaire.</li>
+                <li>Complétion du parcours et résultat obtenu en moins de 5 minutes, mesurés sur le temps actif dans l'app.</li>
+                <li>Une petite question posée après le résultat :
+                  <div class="callout micro-q">« Savez-vous maintenant si votre projet vous paraît réaliste ? » Oui / Pas vraiment / Non</div>
+                </li>
               </ul>
             </li>
-            <li><strong>Métrique utilisateur :</strong> pourcentage d'utilisateurs qui terminent l'estimation en moins de 5 minutes et répondent oui.
+            <li><strong>Signal business :</strong> clic vers un partenaire et mise en relation initiée, en lien direct avec l'objectif d'accélérer la monétisation.
               <ul>
-                <li>Pour cela, ajouter une petite question après le résultat.
-                  <div class="callout micro-q">« Savez-vous maintenant si votre projet est réaliste ? » Oui / Pas vraiment / Non</div>
-                </li>
-                <li>Le temps est mesuré sur le temps actif dans l'app, pas sur le temps écoulé.</li>
+                <li>La mise en relation aboutie est suivie ensuite, mais elle dépend aussi du partenaire : elle ne peut pas être l'unique mesure du MVP.</li>
               </ul>
             </li>
             <li><strong>Comprendre les « Pas vraiment » :</strong> croiser la micro-question avec les signaux d'usage, retours en arrière et manipulation des curseurs.
@@ -757,7 +759,7 @@
 
 </main>
 
-<footer class="wrap">Aminata Dia · Étude de cas Product Manager</footer>
+<footer class="wrap">Aminata Dia · Étude de cas Product Manager · <a href="https://amynata.github.io/pm-portfolio/" target="_blank" rel="noopener">Portfolio ↗</a></footer>
 
 <dialog id="lightbox" class="lightbox" aria-label="Schéma agrandi">
   <button type="button" class="lightbox-close" aria-label="Fermer">✕</button>
@@ -919,7 +921,7 @@
 
   // Colle ici tes URLs Loom finales
   const loomLinks = {
-    mvp: '#'           // colle ici l'URL de ta vidéo Loom
+    mvp: 'https://www.loom.com/share/8e86520f6ee3488f9c35d9914d0a6f34'
   };
   document.querySelectorAll('[data-loom]').forEach(a => {
     const url = loomLinks[a.dataset.loom];
